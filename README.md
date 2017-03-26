@@ -31,10 +31,12 @@ For better clarity see
 Result of example client.
 <img src="https://lh3.googleusercontent.com/lrrYkXnAi0vnaDzvVQaOz676VlDZkA85nscsgpleu0cgi1DkTjjJFeq8BvYwsLx4Ec_pKgeyFaAiFaOoMei65JgE2e51kgE1DYx4gp5Y3IdFCps-UMqpwbo1uFDJeqZu6OGv=w678-h451-no">
 
-<h2>About project</h2>
-C++ 14
-Microsoft Visual Studio 2017
-Microsoft Visual C++ 2017 14.10.25008
+<h2>Made by using</h2>
+<ul>
+<li>C++ 14</li>
+<li>Microsoft Visual Studio 2017</li>
+<li>Microsoft Visual C++ 2017 14.10.25008</li>
+</ul>
 
 <h2>License</h2>
 <a href="https://github.com/woroniecki/PathingLib/blob/master/LICENSE">MIT</a>
