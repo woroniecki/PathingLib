@@ -13,6 +13,7 @@ cout << "Path distance: " << p.getDistance('m');
 ```
 
 <h3>ALT</h3>
+
 ```cpp
 PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("graphNodes.txt", "graphEdges.txt");
 PathingLib::ALT alt(g, 4);
