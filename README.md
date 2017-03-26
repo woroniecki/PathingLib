@@ -5,24 +5,25 @@ Allows creating graphs and finding paths by using Dijkstra or ALT algorithms.
 <h2>Example Usage</h2>
 
 <h3>Dijkstra</h3>
-<xmp>
+
+```cpp
 PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("graphNodes.txt", "graphEdges.txt");
 PathingLib::Path p = PathingLib::Dijkstra::getPath(0, 5, g);
 cout << "Path distance: " << p.getDistance('m');
-</xmp>
+```
 
 <h3>ALT</h3>
-<xmp>
+```cpp
 PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("graphNodes.txt", "graphEdges.txt");
 PathingLib::ALT alt(g, 4);
 PathingLib::Path p = alt.getPath(0, 1000);
 cout << "Path distance: " << p.getDistance('m');
-</xmp>
+```
 
 <div>
 For better clarity see 
-<a href="">documentation</a> and 
-<a href="">example client</a>.
+<a href="http://kodujebolubie.pl/PathingLib/">documentation</a> and 
+<a href="https://github.com/woroniecki/PathingLib/tree/master/PathingLib/ExampleClient">example client</a>.
 </div>
 
 <h3>Graphic result</h3>
@@ -35,3 +36,4 @@ Microsoft Visual Studio 2017
 Microsoft Visual C++ 2017 14.10.25008
 
 <h2>License</h2>
+<a href="https://github.com/woroniecki/PathingLib/blob/master/LICENSE">MIT</a>
