@@ -7,7 +7,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace PathingLib;
 
 namespace PathingTest
-{
+{		
 	TEST_CLASS(GraphTest)
 	{
 	public:
@@ -108,7 +108,7 @@ namespace PathingTest
 				exceptionThrownOutOfRange = true;
 			}
 			Assert::IsTrue(exceptionThrownOutOfRange, L"Exception not thrown - target node range", LINE_INFO());
-
+			
 			g.addDirectedEdge(0, 1, 1);
 			g.addDirectedEdge(1, 0, 11);
 

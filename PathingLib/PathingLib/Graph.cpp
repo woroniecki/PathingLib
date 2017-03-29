@@ -52,7 +52,7 @@ namespace PathingLib
 		for (string line; getline(inputNode, line); )
 		{
 			vector<string> nodeArgs = Utility::separateLine(line);
-
+			
 			double lat = std::stod(nodeArgs[1].c_str());
 			double lng = std::stod(nodeArgs[2].c_str());
 
@@ -139,17 +139,17 @@ namespace PathingLib
 	bool Graph::addDirectedEdge(int source, int target, int distance) {
 		if (edgesAmount >= edgesMaxAmount)
 			throw std::out_of_range("Can't add more edges, because array of egdes is full");
-		if (source >= nodesMaxAmount)
+		if(source >= nodesMaxAmount)
 			throw std::out_of_range("Can't add edge, because source node is out of nodes range");
-		if (target >= nodesMaxAmount)
+		if(target >= nodesMaxAmount)
 			throw std::out_of_range("Can't add edge, because target node is out of nodes range");
 		edges[edgesAmount].index = edgesAmount;
 		edges[edgesAmount].source = source;
 		edges[edgesAmount].target = target;
 		edges[edgesAmount].distance = distance;
 
-		nodes[source].addOutEdge(edgesAmount);
-		nodes[target].addInEdge(edgesAmount);
+		nodes[source].addOutEdge(edgesAmount); 
+	    nodes[target].addInEdge(edgesAmount);
 		edgesAmount++;
 		return true;
 	}
@@ -168,36 +168,36 @@ namespace PathingLib
 		return edges[index];
 	}
 
-	int Graph::getNodesAmount() {
+	int Graph::getNodesAmount(){
 		return nodesAmount;
 	}
 
-	int Graph::getEdgesAmount() {
+	int Graph::getEdgesAmount(){
 		return edgesAmount;
 	}
 
-	int* Graph::getInEdges(int nodeIndex) {
+	int* Graph::getInEdges(int nodeIndex){
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}
 		return nodes[nodeIndex].in_edges;
 	}
 
-	int* Graph::getOutEdges(int nodeIndex) {
+	int* Graph::getOutEdges(int nodeIndex){
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}
 		return nodes[nodeIndex].out_edges;
 	}
 
-	int Graph::getInEdgesAmount(int nodeIndex) {
+	int Graph::getInEdgesAmount(int nodeIndex){
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}
 		return nodes[nodeIndex].in_edges_amount;
 	}
 
-	int Graph::getOutEdgesAmount(int nodeIndex) {
+	int Graph::getOutEdgesAmount(int nodeIndex){
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}

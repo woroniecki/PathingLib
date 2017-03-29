@@ -21,8 +21,9 @@ int main()
 	cout << "Run path finding algorithm" << endl;
 	PathingLib::Path p = alt.getPath(0, 1000);
 
-	cout << "Path distance: " << p.getDistance('k') << " kilometers" << endl;
+	cout << "Path distance: " << p.getDistance('k') << " kilometers"<< endl;
 	p.saveToFileCSV("../ExampleClient/examplePath.txt");
 
-	return 0;
+    return 0;
 }
+

@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{C4D2EF00-C0D7-4EF9-8857-4ADF7B14F5BB}</ProjectGuid>
+    <ProjectGuid>{847EC46B-8B7B-46DF-8DD0-3F626CEB2FD9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>PathingTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
@@ -77,6 +77,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -94,6 +95,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,22 +153,22 @@
   <ItemGroup>
     <ClCompile Include="ALTTest.cpp" />
     <ClCompile Include="DijkstraTest.cpp" />
-    <ClCompile Include="GraphTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="GraphTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PathingLib\PathingLib.vcxproj">
+      <Project>{bb99722b-06c8-43e7-995e-223dc9ac8a31}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Text Include="edges.txt" />
     <Text Include="nodes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PathingLib\PathingLib.vcxproj">
-      <Project>{9b9e8073-d310-4640-9ccf-0a43853f3189}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

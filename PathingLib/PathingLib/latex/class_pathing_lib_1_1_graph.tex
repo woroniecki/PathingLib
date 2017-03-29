@@ -1,0 +1,96 @@
+\hypertarget{class_pathing_lib_1_1_graph}{}\section{Pathing\+Lib\+:\+:Graph Class Reference}
+\label{class_pathing_lib_1_1_graph}\index{Pathing\+Lib\+::\+Graph@{Pathing\+Lib\+::\+Graph}}
+
+
+Represent a directed graph object.  
+
+
+
+
+{\ttfamily \#include $<$Graph.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_ace1d095b1f171531a169f71f988661b1}{Graph} (int nodes\+Max\+Amount, int edges\+Max\+Amount)
+\item 
+void P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_a8cf200bdb165127868174c1fd4cfe279}{save\+To\+File} (string nodes\+Path, string edges\+Path)
+\item 
+void P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_ac0e4b2c14f3b2b2b5058da2970c373a7}{save\+To\+File\+C\+SV} (string file\+Path)\hypertarget{class_pathing_lib_1_1_graph_ac0e4b2c14f3b2b2b5058da2970c373a7}{}\label{class_pathing_lib_1_1_graph_ac0e4b2c14f3b2b2b5058da2970c373a7}
+
+\begin{DoxyCompactList}\small\item\em save all edges by using string line format in file \end{DoxyCompactList}\item 
+bool P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_a801e9512466a72b6aa71a33a80c90af8}{add\+Node} (double latitude, double longtitude)\hypertarget{class_pathing_lib_1_1_graph_a801e9512466a72b6aa71a33a80c90af8}{}\label{class_pathing_lib_1_1_graph_a801e9512466a72b6aa71a33a80c90af8}
+
+\begin{DoxyCompactList}\small\item\em add node to graph if array is not full \end{DoxyCompactList}\item 
+bool P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_a99aaeeae02365630ac9cbe7bf24a9a55}{add\+Directed\+Edge} (int source, int target, int distance)\hypertarget{class_pathing_lib_1_1_graph_a99aaeeae02365630ac9cbe7bf24a9a55}{}\label{class_pathing_lib_1_1_graph_a99aaeeae02365630ac9cbe7bf24a9a55}
+
+\begin{DoxyCompactList}\small\item\em add edge from source to target, if array is not full \end{DoxyCompactList}\item 
+\hyperlink{class_pathing_lib_1_1_n_o_d_e}{N\+O\+DE} P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_a4c9d25ad34b11f0f843a6a4f356776c9}{get\+Node} (int index)\hypertarget{class_pathing_lib_1_1_graph_a4c9d25ad34b11f0f843a6a4f356776c9}{}\label{class_pathing_lib_1_1_graph_a4c9d25ad34b11f0f843a6a4f356776c9}
+
+\begin{DoxyCompactList}\small\item\em return node with index \end{DoxyCompactList}\item 
+\hyperlink{class_pathing_lib_1_1_e_d_g_e}{E\+D\+GE} P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_add1badb2122286d8ed9199b7dfcc5f9a}{get\+Edge} (int index)\hypertarget{class_pathing_lib_1_1_graph_add1badb2122286d8ed9199b7dfcc5f9a}{}\label{class_pathing_lib_1_1_graph_add1badb2122286d8ed9199b7dfcc5f9a}
+
+\begin{DoxyCompactList}\small\item\em return edge with index \end{DoxyCompactList}\item 
+int P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_a72a922e8494e776b164d911e7f2541c8}{get\+Nodes\+Amount} ()\hypertarget{class_pathing_lib_1_1_graph_a72a922e8494e776b164d911e7f2541c8}{}\label{class_pathing_lib_1_1_graph_a72a922e8494e776b164d911e7f2541c8}
+
+\begin{DoxyCompactList}\small\item\em return nodes amount \end{DoxyCompactList}\item 
+int P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_a838c2cbb3fd9ea6cf8bc9e1eda69e73f}{get\+Edges\+Amount} ()\hypertarget{class_pathing_lib_1_1_graph_a838c2cbb3fd9ea6cf8bc9e1eda69e73f}{}\label{class_pathing_lib_1_1_graph_a838c2cbb3fd9ea6cf8bc9e1eda69e73f}
+
+\begin{DoxyCompactList}\small\item\em return edges amount \end{DoxyCompactList}\item 
+int $\ast$ \hyperlink{class_pathing_lib_1_1_graph_a0150276e986e7483cdb94c6145602aab}{get\+In\+Edges} (int node\+Index)\hypertarget{class_pathing_lib_1_1_graph_a0150276e986e7483cdb94c6145602aab}{}\label{class_pathing_lib_1_1_graph_a0150276e986e7483cdb94c6145602aab}
+
+\begin{DoxyCompactList}\small\item\em return array of edges from any node to node with node\+Index \end{DoxyCompactList}\item 
+int $\ast$ \hyperlink{class_pathing_lib_1_1_graph_ac5e9c0410ba1ea6b14e34b43526dd439}{get\+Out\+Edges} (int node\+Index)\hypertarget{class_pathing_lib_1_1_graph_ac5e9c0410ba1ea6b14e34b43526dd439}{}\label{class_pathing_lib_1_1_graph_ac5e9c0410ba1ea6b14e34b43526dd439}
+
+\begin{DoxyCompactList}\small\item\em return array of edges from node with node\+Index to any node \end{DoxyCompactList}\item 
+int P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_a639c91136dd7ff88a9627b2ad355df11}{get\+In\+Edges\+Amount} (int node\+Index)\hypertarget{class_pathing_lib_1_1_graph_a639c91136dd7ff88a9627b2ad355df11}{}\label{class_pathing_lib_1_1_graph_a639c91136dd7ff88a9627b2ad355df11}
+
+\begin{DoxyCompactList}\small\item\em return amount of edges from any node to node with node\+Index \end{DoxyCompactList}\item 
+int P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_ad0972ca21a8db914fd3d607f0b19b6c4}{get\+Out\+Edges\+Amount} (int node\+Index)\hypertarget{class_pathing_lib_1_1_graph_ad0972ca21a8db914fd3d607f0b19b6c4}{}\label{class_pathing_lib_1_1_graph_ad0972ca21a8db914fd3d607f0b19b6c4}
+
+\begin{DoxyCompactList}\small\item\em return amount of edges from node with node\+Index to any node \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_pathing_lib_1_1_graph}{Graph} P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_graph_ae249930c9e63f8f118e66589cf1ca12a}{load\+Graph\+From\+File} (std\+::string nodes\+Path, std\+::string edges\+Path)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Represent a directed graph object. 
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Pathing\+Lib\+::\+Graph@{Pathing\+Lib\+::\+Graph}!Graph@{Graph}}
+\index{Graph@{Graph}!Pathing\+Lib\+::\+Graph@{Pathing\+Lib\+::\+Graph}}
+\subsubsection[{\texorpdfstring{Graph(int nodes\+Max\+Amount, int edges\+Max\+Amount)}{Graph(int nodesMaxAmount, int edgesMaxAmount)}}]{\setlength{\rightskip}{0pt plus 5cm}Pathing\+Lib\+::\+Graph\+::\+Graph (
+\begin{DoxyParamCaption}
+\item[{int}]{nodes\+Max\+Amount, }
+\item[{int}]{edges\+Max\+Amount}
+\end{DoxyParamCaption}
+)}\hypertarget{class_pathing_lib_1_1_graph_ace1d095b1f171531a169f71f988661b1}{}\label{class_pathing_lib_1_1_graph_ace1d095b1f171531a169f71f988661b1}
+int nodes\+Max\+Amount -\/ size of nodes array int edges\+Max\+Amount -\/ size of edges array 
+
+\subsection{Member Function Documentation}
+\index{Pathing\+Lib\+::\+Graph@{Pathing\+Lib\+::\+Graph}!load\+Graph\+From\+File@{load\+Graph\+From\+File}}
+\index{load\+Graph\+From\+File@{load\+Graph\+From\+File}!Pathing\+Lib\+::\+Graph@{Pathing\+Lib\+::\+Graph}}
+\subsubsection[{\texorpdfstring{load\+Graph\+From\+File(std\+::string nodes\+Path, std\+::string edges\+Path)}{loadGraphFromFile(std::string nodesPath, std::string edgesPath)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Graph} Pathing\+Lib\+::\+Graph\+::load\+Graph\+From\+File (
+\begin{DoxyParamCaption}
+\item[{std\+::string}]{nodes\+Path, }
+\item[{std\+::string}]{edges\+Path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{class_pathing_lib_1_1_graph_ae249930c9e63f8f118e66589cf1ca12a}{}\label{class_pathing_lib_1_1_graph_ae249930c9e63f8f118e66589cf1ca12a}
+string nodes\+Path -\/ path to file with nodes, which is represented in way  index (0, infinity), latitude, longtitude  Example\+:  0 1.\+2341 2.\+232  1 1.\+9923 2.\+333  string edges\+Path -\/ path to file with edges, which is represented in way  source node index(0, amount od nodes), target node index(0, amount od nodes), distance in km  Example\+:  0 1 2.\+11  1 0 2.\+11 \index{Pathing\+Lib\+::\+Graph@{Pathing\+Lib\+::\+Graph}!save\+To\+File@{save\+To\+File}}
+\index{save\+To\+File@{save\+To\+File}!Pathing\+Lib\+::\+Graph@{Pathing\+Lib\+::\+Graph}}
+\subsubsection[{\texorpdfstring{save\+To\+File(string nodes\+Path, string edges\+Path)}{saveToFile(string nodesPath, string edgesPath)}}]{\setlength{\rightskip}{0pt plus 5cm}void Pathing\+Lib\+::\+Graph\+::save\+To\+File (
+\begin{DoxyParamCaption}
+\item[{string}]{nodes\+Path, }
+\item[{string}]{edges\+Path}
+\end{DoxyParamCaption}
+)}\hypertarget{class_pathing_lib_1_1_graph_a8cf200bdb165127868174c1fd4cfe279}{}\label{class_pathing_lib_1_1_graph_a8cf200bdb165127868174c1fd4cfe279}
+save graph to file ~\newline
+ create two files with nodes and edges 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Graph.\+h\item 
+Graph.\+cpp\end{DoxyCompactItemize}

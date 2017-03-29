@@ -37,10 +37,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="edges.txt">
+    <Text Include="nodes.txt">
       <Filter>Pliki zasobów</Filter>
     </Text>
-    <Text Include="nodes.txt">
+    <Text Include="edges.txt">
       <Filter>Pliki zasobów</Filter>
     </Text>
   </ItemGroup>

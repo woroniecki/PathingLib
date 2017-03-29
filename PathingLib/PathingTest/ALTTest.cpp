@@ -25,7 +25,7 @@ namespace PathingTest
 			try {
 				PathingLib::ALT alt_exception(g, 6, false);
 			}
-			catch (std::invalid_argument ex) {
+			catch(std::invalid_argument ex){
 				exceptionThrownInvalidArgument = true;
 			}
 			Assert::AreEqual(true, exceptionThrownInvalidArgument, L"Invalid argument not thrown", LINE_INFO());
@@ -48,7 +48,7 @@ namespace PathingTest
 			PathingLib::Path p = alt.getPath(0, 5);
 			Assert::AreEqual(4.0, p.getDistance('m'), L"Wrong distance of path", LINE_INFO());
 			Assert::AreEqual(5, p.getNodesAmount(), L"Wrong nodes amount in path", LINE_INFO());
-
+			
 			std::vector<PathingLib::NODE> nodes = p.nodes;
 			Assert::AreEqual(0, nodes[0].index, L"Wrong node index in created path", LINE_INFO());
 			Assert::AreEqual(1, nodes[1].index, L"Wrong node index in created path", LINE_INFO());

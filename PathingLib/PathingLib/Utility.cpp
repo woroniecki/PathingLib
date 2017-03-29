@@ -13,7 +13,7 @@ namespace PathingLib
 	int Utility::getLinesAmountInFile(std::string path) {
 		int amount = 0;
 		ifstream input(path);
-		if (input) {
+		if (input){
 			for (string line; getline(input, line); )
 			{
 				amount++;

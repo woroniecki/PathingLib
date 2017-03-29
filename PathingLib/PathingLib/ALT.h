@@ -18,7 +18,7 @@ namespace PathingLib
 	class ALT
 	{
 	public:
-
+		
 		// Graph used to finding path, it have to be connective
 		// landmarksAmount - amount of landmarks used to pathing
 		// random - if true landmarks selected random

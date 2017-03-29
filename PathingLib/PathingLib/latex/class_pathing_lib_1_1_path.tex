@@ -1,0 +1,67 @@
+\hypertarget{class_pathing_lib_1_1_path}{}\section{Pathing\+Lib\+:\+:Path Class Reference}
+\label{class_pathing_lib_1_1_path}\index{Pathing\+Lib\+::\+Path@{Pathing\+Lib\+::\+Path}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_path_a6f2924c9de3918d8f9e0775d63d10b10}{Path} (int target\+Index, int $\ast$\hyperlink{class_pathing_lib_1_1_path_a91bb2272395c85abb89dc26e1f3811bd}{nodes}, \hyperlink{class_pathing_lib_1_1_graph}{Graph} \&g, int distance, int=10000)
+\item 
+double P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_path_a69c49b0fc70684d367d7dc8dd2de700e}{get\+Distance} (char unit)
+\item 
+int P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_path_ad15ebba8d458ccc64c350dad7e06fbf2}{get\+Nodes\+Amount} ()\hypertarget{class_pathing_lib_1_1_path_ad15ebba8d458ccc64c350dad7e06fbf2}{}\label{class_pathing_lib_1_1_path_ad15ebba8d458ccc64c350dad7e06fbf2}
+
+\begin{DoxyCompactList}\small\item\em return amount of nodes in path \end{DoxyCompactList}\item 
+void P\+A\+T\+H\+I\+N\+G\+L\+I\+B\+\_\+\+A\+PI \hyperlink{class_pathing_lib_1_1_path_af9ed758ac4a395b4ab7a2b025e785e96}{save\+To\+File\+C\+SV} (string file\+Path)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ \hyperlink{class_pathing_lib_1_1_n_o_d_e}{N\+O\+DE} $>$ \hyperlink{class_pathing_lib_1_1_path_a91bb2272395c85abb89dc26e1f3811bd}{nodes}\hypertarget{class_pathing_lib_1_1_path_a91bb2272395c85abb89dc26e1f3811bd}{}\label{class_pathing_lib_1_1_path_a91bb2272395c85abb89dc26e1f3811bd}
+
+\begin{DoxyCompactList}\small\item\em hold indexes of nodes, which represent path \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Pathing\+Lib\+::\+Path@{Pathing\+Lib\+::\+Path}!Path@{Path}}
+\index{Path@{Path}!Pathing\+Lib\+::\+Path@{Pathing\+Lib\+::\+Path}}
+\subsubsection[{\texorpdfstring{Path(int target\+Index, int $\ast$nodes, Graph \&g, int distance, int=10000)}{Path(int targetIndex, int *nodes, Graph &g, int distance, int=10000)}}]{\setlength{\rightskip}{0pt plus 5cm}Pathing\+Lib\+::\+Path\+::\+Path (
+\begin{DoxyParamCaption}
+\item[{int}]{target\+Index, }
+\item[{int $\ast$}]{nodes, }
+\item[{{\bf Graph} \&}]{g, }
+\item[{int}]{distance, }
+\item[{int}]{max\+Nodes\+Amount = {\ttfamily 10000}}
+\end{DoxyParamCaption}
+)}\hypertarget{class_pathing_lib_1_1_path_a6f2924c9de3918d8f9e0775d63d10b10}{}\label{class_pathing_lib_1_1_path_a6f2924c9de3918d8f9e0775d63d10b10}
+target\+Index -\/ index in nodes array which is last ~\newline
+ nodes -\/ array with dijkstra nodes before ~\newline
+ g -\/ graph on which path is based ~\newline
+ distance -\/ total distance of path ~\newline
+ max nodes amount -\/ by default 10 000, it\textquotesingle{}s to avoid infinity loop ~\newline
+ 
+
+\subsection{Member Function Documentation}
+\index{Pathing\+Lib\+::\+Path@{Pathing\+Lib\+::\+Path}!get\+Distance@{get\+Distance}}
+\index{get\+Distance@{get\+Distance}!Pathing\+Lib\+::\+Path@{Pathing\+Lib\+::\+Path}}
+\subsubsection[{\texorpdfstring{get\+Distance(char unit)}{getDistance(char unit)}}]{\setlength{\rightskip}{0pt plus 5cm}double Pathing\+Lib\+::\+Path\+::get\+Distance (
+\begin{DoxyParamCaption}
+\item[{char}]{unit}
+\end{DoxyParamCaption}
+)}\hypertarget{class_pathing_lib_1_1_path_a69c49b0fc70684d367d7dc8dd2de700e}{}\label{class_pathing_lib_1_1_path_a69c49b0fc70684d367d7dc8dd2de700e}
+return distance ~\newline
+ if unit is \textquotesingle{}c\textquotesingle{} in centimeters ~\newline
+ if unit is \textquotesingle{}m\textquotesingle{} in meters ~\newline
+ if unit is \textquotesingle{}k\textquotesingle{} in kilometers ~\newline
+ \index{Pathing\+Lib\+::\+Path@{Pathing\+Lib\+::\+Path}!save\+To\+File\+C\+SV@{save\+To\+File\+C\+SV}}
+\index{save\+To\+File\+C\+SV@{save\+To\+File\+C\+SV}!Pathing\+Lib\+::\+Path@{Pathing\+Lib\+::\+Path}}
+\subsubsection[{\texorpdfstring{save\+To\+File\+C\+S\+V(string file\+Path)}{saveToFileCSV(string filePath)}}]{\setlength{\rightskip}{0pt plus 5cm}void Pathing\+Lib\+::\+Path\+::save\+To\+File\+C\+SV (
+\begin{DoxyParamCaption}
+\item[{string}]{file\+Path}
+\end{DoxyParamCaption}
+)}\hypertarget{class_pathing_lib_1_1_path_af9ed758ac4a395b4ab7a2b025e785e96}{}\label{class_pathing_lib_1_1_path_af9ed758ac4a395b4ab7a2b025e785e96}
+save nodes in file ~\newline
+ lines save in stringline format 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Path.\+h\item 
+Path.\+cpp\end{DoxyCompactItemize}

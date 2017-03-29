@@ -19,7 +19,7 @@ namespace PathingLib
 {
 
 	ALT::ALT(Graph& g, int landmarksAmount, bool random) {
-		if (landmarksAmount >= g.getNodesAmount())
+		if(landmarksAmount >= g.getNodesAmount())
 			throw std::invalid_argument("amount of landmarks can't be higher than nodes amount in graph");
 		if (landmarksAmount <= 0)
 			throw std::invalid_argument("amount of landmarks have to be higher than 0");
@@ -80,7 +80,7 @@ namespace PathingLib
 		int* distanceArray = new int[g.getNodesAmount()];
 		std::fill_n(distanceArray, g.getNodesAmount(), Utility::getINF());
 		int* nodesBeforeArray = new int[g.getNodesAmount()];
-
+		
 		std::priority_queue< std::pair<int, int>,
 			std::vector<std::pair<int, int>>,
 			std::greater<std::pair<int, int>> > q;
@@ -128,7 +128,7 @@ namespace PathingLib
 		return heuristic;
 	}
 
-	ALT::~ALT() {
+	ALT::~ALT(){
 		for (int i = 0; i < landmarksAmount; i++) {
 			if (dijkstraLandmarks[i])
 				delete[] dijkstraLandmarks[i];
