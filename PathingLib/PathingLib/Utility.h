@@ -26,6 +26,9 @@ namespace PathingLib
 		// return the same array extend by one unassigned field
 		static int* addFieldToArray(int array[], int size);
 
+		// copies int array
+		static int* copyArray(int array[], int size);
+
 		// return max integer
 		static int getINF();
 

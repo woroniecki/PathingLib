@@ -50,6 +50,17 @@ namespace PathingLib
 		return newArray;
 	}
 
+
+	int* Utility::copyArray(int array[], int size) {
+		if (size == 0)
+			return NULL;
+		int* newArray = new int[size];
+		for (int i = 0; i < size; i++) {
+			newArray[i] = array[i];
+		}
+		return newArray;
+	}
+
 	int Utility::getINF() {
 		return 90000000;
 	}

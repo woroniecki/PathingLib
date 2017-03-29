@@ -14,7 +14,22 @@ using namespace std;
 namespace PathingLib
 {
 
-	NODE::NODE() {};
+	NODE::NODE() {}
+
+	NODE::~NODE() {
+		/*if (this->in_edges != NULL)
+		delete[] this->in_edges;
+		if (this->out_edges != NULL)
+		delete[] this->out_edges;*/
+	}
+
+	NODE::NODE(const NODE& o) : index(o.index), longtitude(o.longtitude), latitude(o.latitude) {
+		PathingLib::Utility u;
+		in_edges = Utility::copyArray(o.in_edges, o.in_edges_amount);
+		in_edges_amount = o.in_edges_amount;
+		out_edges = Utility::copyArray(o.out_edges, o.out_edges_amount);
+		out_edges_amount = o.out_edges_amount;
+	}
 
 	void NODE::addInEdge(int edgeIndex) {
 		in_edges = Utility::addFieldToArray(in_edges, in_edges_amount);

@@ -26,6 +26,10 @@ namespace PathingLib
 
 		PATHINGLIB_API NODE();
 
+		virtual PATHINGLIB_API ~NODE();
+
+		PATHINGLIB_API NODE(const NODE& o);
+
 		// add edge which is directed from any node to this one
 		void PATHINGLIB_API addInEdge(int edgeIndex);
 

@@ -15,7 +15,7 @@ namespace PathingLib
 		int nextNode = targetIndex;
 		int nodesAmount = 0;
 		while (nextNode != -1 || nodesAmount >= maxNodesAmount) {
-			this->nodes.push_back(g.getNode(nextNode));
+			this->nodes.push_back(NODE(g.getNode(nextNode)));
 			nextNode = nodes[nextNode];
 			nodesAmount++;
 		}
