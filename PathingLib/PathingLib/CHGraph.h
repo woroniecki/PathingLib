@@ -17,13 +17,18 @@ namespace PathingLib
 {
 	class CH_NODE {
 		public:
-			NODE* node;
-			int contract_lvl;
+			PATHINGLIB_API CH_NODE();
 
-			int* in_higher_edges;
-			int in_higher_e_amount;
-			int* out_higher_edges;
-			int out_higher_e_amount;
+			NODE* node;
+			int contract_lvl = -1;
+
+			int* inHigherEdges;
+			int inHEdgesAmount;
+			int* outHigherEdges;
+			int outHEdgesAmount;
+
+			void addInHigherEdge(int edgeIndex);
+			void addOutHigherEdge(int edgeIndex);
 	};
 
 	class CH_EDGE  {
@@ -37,23 +42,34 @@ namespace PathingLib
 	{
 	public:
 		PATHINGLIB_API CHGraph();
+
+		// g - Graph on which contraction hierarchy will be created
+		// alt - ALT of g graph, for finding the shortest distance between two points on g Graph
 		PATHINGLIB_API CHGraph(Graph& g, ALT& alt);
-		// int query(int source_, int target_);
+
+		PATHINGLIB_API CHGraph(std::string nodesPath, std::string edgesPath);
+
+		void PATHINGLIB_API saveGraphToFile(string nodesPath, string edgesPath);
+
+		int PATHINGLIB_API getPath(int sourceIndex, int targetIndex);
+
+		// int PATHINGLIB_API getPath(int sourceIndex, int targetIndex);
+
 	private:
-		Graph g;
-		ALT alt;
+		Graph* g;
+		ALT* alt;
 		CH_NODE* nodes;
-		int nodes_amount;
+		int nodesAmount = 0;
 		CH_EDGE* edges;
-		int edges_amount;
+		int edgesAmount = 0;
 
 		void extendGraph();
 		void extendGraphNodes();
 		void extendGraphEdges();
-		void addShortcutEdge(int source, int target, int distance, int firstEDGEpartID, int secondEDGEpartID);
+		void addShortcutEdge(int source, int target, int distance, int firstEDGEpartID, int secondEDGEpartID, bool = true);
 
 		void CHGraph::preprocesing();
+		void setHigherNeighbours();
 		// void preprocesing();
-		// void setHigherNeighbours();
 	};
 }

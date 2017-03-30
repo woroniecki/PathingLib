@@ -24,7 +24,7 @@ namespace PathingLib
 			throw std::invalid_argument("amount of landmarks can't be higher than nodes amount in graph");
 		if (landmarksAmount <= 0)
 			throw std::invalid_argument("amount of landmarks have to be higher than 0");
-		this->g = g;
+		this->g = &g;
 		this->landmarksAmount = landmarksAmount;
 		dijkstraLandmarks = new int*[landmarksAmount];
 		int* landmarksIndexes = new int[landmarksAmount];
@@ -58,9 +58,9 @@ namespace PathingLib
 	}
 
 	int ALT::getTheFurthestLandmark(int landmarkAmount) {
-		int node = rand() % g.getNodesAmount();
+		int node = rand() % g->getNodesAmount();
 		int max_dist = 0;
-		for (int i = 0; i < g.getNodesAmount(); i++) {
+		for (int i = 0; i < g->getNodesAmount(); i++) {
 			int dist = Utility::getINF();
 			for (int j = 0; j < landmarkAmount; j++) {
 				if (dijkstraLandmarks[j][i] < dist) {
@@ -78,9 +78,9 @@ namespace PathingLib
 	typedef std::pair<int, int> P;
 
 	Path ALT::getPath(int sourceIndex, int targetIndex) {
-		int* distanceArray = new int[g.getNodesAmount()];
-		std::fill_n(distanceArray, g.getNodesAmount(), Utility::getINF());
-		int* nodesBeforeArray = new int[g.getNodesAmount()];
+		int* distanceArray = new int[g->getNodesAmount()];
+		std::fill_n(distanceArray, g->getNodesAmount(), Utility::getINF());
+		int* nodesBeforeArray = new int[g->getNodesAmount()];
 
 		std::priority_queue< std::pair<int, int>,
 			std::vector<std::pair<int, int>>,
@@ -95,10 +95,10 @@ namespace PathingLib
 			q.pop();
 			int node = top.second;
 			int distance = distanceArray[node];
-			int* out_edges = g.getOutEdges(node);
-			for (int i = 0; i < g.getOutEdgesAmount(node); i++) {
-				int next_node = g.getEdge(out_edges[i]).target;
-				int dist_next_node = distance + g.getEdge(out_edges[i]).distance;
+			int* out_edges = g->getOutEdges(node);
+			for (int i = 0; i < g->getOutEdgesAmount(node); i++) {
+				int next_node = g->getEdge(out_edges[i]).target;
+				int dist_next_node = distance + g->getEdge(out_edges[i]).distance;
 				int heuristic_ = heuristic(next_node, targetIndex);
 				int heuristic_dist = dist_next_node + heuristic_;
 				if (dist_next_node < distanceArray[next_node] &&
@@ -111,15 +111,15 @@ namespace PathingLib
 		}
 		if (distanceArray[targetIndex] == Utility::getINF())
 			return Path();
-		Path path = Path(targetIndex, nodesBeforeArray, g, distanceArray[targetIndex]);
+		Path path(targetIndex, nodesBeforeArray, *g, distanceArray[targetIndex]);
 		delete[] distanceArray;
 		delete[] nodesBeforeArray;
 		return path;
 	}
 
 	int ALT::getPathDist(int sourceIndex, int targetIndex) {
-		int* distanceArray = new int[g.getNodesAmount()];
-		std::fill_n(distanceArray, g.getNodesAmount(), Utility::getINF());
+		int* distanceArray = new int[g->getNodesAmount()];
+		std::fill_n(distanceArray, g->getNodesAmount(), Utility::getINF());
 
 		std::priority_queue< std::pair<int, int>,
 			std::vector<std::pair<int, int>>,
@@ -133,10 +133,10 @@ namespace PathingLib
 			q.pop();
 			int node = top.second;
 			int distance = distanceArray[node];
-			int* out_edges = g.getOutEdges(node);
-			for (int i = 0; i < g.getOutEdgesAmount(node); i++) {
-				int next_node = g.getEdge(out_edges[i]).target;
-				int dist_next_node = distance + g.getEdge(out_edges[i]).distance;
+			int* out_edges = g->getOutEdges(node);
+			for (int i = 0; i < g->getOutEdgesAmount(node); i++) {
+				int next_node = g->getEdge(out_edges[i]).target;
+				int dist_next_node = distance + g->getEdge(out_edges[i]).distance;
 				int heuristic_ = heuristic(next_node, targetIndex);
 				int heuristic_dist = dist_next_node + heuristic_;
 				if (dist_next_node < distanceArray[next_node] &&

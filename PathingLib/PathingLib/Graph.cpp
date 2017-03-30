@@ -13,7 +13,6 @@ using namespace std;
 
 namespace PathingLib
 {
-
 	NODE::NODE() {}
 
 	NODE::~NODE() {
@@ -30,6 +29,8 @@ namespace PathingLib
 		out_edges = Utility::copyArray(o.out_edges, o.out_edges_amount);
 		out_edges_amount = o.out_edges_amount;
 	}
+
+	NODE::NODE(int index, double longtitude, double latitude) : index(index), longtitude(longtitude), latitude(latitude) {}
 
 	void NODE::addInEdge(int edgeIndex) {
 		in_edges = Utility::addFieldToArray(in_edges, in_edges_amount);
@@ -56,9 +57,11 @@ namespace PathingLib
 		this->edgesMaxAmount = edgesMaxAmount;
 	}
 
-	Graph Graph::loadGraphFromFile(std::string nodesPath, std::string edgesPath) {
+	Graph Graph::loadGraphFromFile(std::string nodesPath, std::string edgesPath, int maxEdgesAmount_) {
 		int nodesAmount = Utility::getLinesAmountInFile(nodesPath);
 		int edgesAmount = Utility::getLinesAmountInFile(edgesPath);
+		if (maxEdgesAmount_ != -1)
+			edgesAmount = maxEdgesAmount_;
 		if (nodesAmount == -1 || edgesAmount == -1)
 			throw std::runtime_error("Invalid file");
 		Graph graph(nodesAmount, edgesAmount);

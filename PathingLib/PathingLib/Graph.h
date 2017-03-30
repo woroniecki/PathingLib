@@ -26,6 +26,8 @@ namespace PathingLib
 
 		PATHINGLIB_API NODE();
 
+		PATHINGLIB_API NODE(int index, double longtitude, double latitude);
+
 		virtual PATHINGLIB_API ~NODE();
 
 		PATHINGLIB_API NODE(const NODE& o);
@@ -50,6 +52,12 @@ namespace PathingLib
 	class Graph
 	{
 	public:
+		// array of nodes
+		NODE* nodes;
+
+		// array of edges
+		EDGE* edges;
+
 		PATHINGLIB_API Graph();
 		// int nodesMaxAmount - size of nodes array
 		// int edgesMaxAmount - size of edges array
@@ -65,7 +73,7 @@ namespace PathingLib
 		// Example:
 		// 0 1 2.11
 		// 1 0 2.11 
-		static Graph PATHINGLIB_API loadGraphFromFile(std::string nodesPath, std::string edgesPath);
+		static Graph PATHINGLIB_API loadGraphFromFile(std::string nodesPath, std::string edgesPath, int = -1);
 
 		// save graph to file
 		// create two files with nodes and edges
@@ -105,11 +113,6 @@ namespace PathingLib
 		int PATHINGLIB_API getOutEdgesAmount(int nodeIndex);
 
 	private:
-		// array of nodes
-		NODE* nodes;
-
-		// array of edges
-		EDGE* edges;
 
 		// Current nodes amount
 		int nodesAmount;

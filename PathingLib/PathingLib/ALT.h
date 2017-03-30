@@ -36,11 +36,13 @@ namespace PathingLib
 		// return distance of path from source to target
 		int PATHINGLIB_API getPathDist(int sourceIndex, int targetIndex);
 
-	private:
-		Graph g;
-		int** dijkstraLandmarks;
-		int landmarksAmount;
 		int PATHINGLIB_API heuristic(int node, int target);
+		
+		int** dijkstraLandmarks;
+	private:
+		Graph* g;
+		
+		int landmarksAmount;
 		int PATHINGLIB_API getTheFurthestLandmark(int landmarkAmount);
 	};
 }
