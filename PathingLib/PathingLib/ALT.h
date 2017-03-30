@@ -18,6 +18,7 @@ namespace PathingLib
 	class ALT
 	{
 	public:
+		PATHINGLIB_API ALT();
 		
 		// Graph used to finding path, it have to be connective
 		// landmarksAmount - amount of landmarks used to pathing
@@ -25,10 +26,15 @@ namespace PathingLib
 		// if not landmark is selected to be the furthest from the other landmarks
 		PATHINGLIB_API ALT(Graph& g, int landmarksAmount, bool = true);
 
-		PATHINGLIB_API ~ALT();
+		// PATHINGLIB_API ALT(const ALT& o);
+
+		// PATHINGLIB_API ~ALT();
 
 		// return path by using alt algorithm <br>
 		Path PATHINGLIB_API getPath(int sourceIndex, int targetIndex);
+
+		// return distance of path from source to target
+		int PATHINGLIB_API getPathDist(int sourceIndex, int targetIndex);
 
 	private:
 		Graph g;

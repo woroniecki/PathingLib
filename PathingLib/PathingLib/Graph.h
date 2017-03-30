@@ -75,10 +75,10 @@ namespace PathingLib
 		void PATHINGLIB_API saveToFileCSV(string filePath);
 
 		// add node to graph if array is not full
-		bool PATHINGLIB_API addNode(double latitude, double longtitude);
+		NODE PATHINGLIB_API addNode(double latitude, double longtitude);
 
 		// add edge from source to target, if array is not full
-		bool PATHINGLIB_API addDirectedEdge(int source, int target, int distance);
+		EDGE PATHINGLIB_API addDirectedEdge(int source, int target, int distance);
 
 		// return node with index
 		NODE PATHINGLIB_API getNode(int index);

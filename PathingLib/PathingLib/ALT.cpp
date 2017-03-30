@@ -17,9 +17,10 @@ using namespace std;
 
 namespace PathingLib
 {
+	ALT::ALT() {}
 
 	ALT::ALT(Graph& g, int landmarksAmount, bool random) {
-		if(landmarksAmount >= g.getNodesAmount())
+		if (landmarksAmount >= g.getNodesAmount())
 			throw std::invalid_argument("amount of landmarks can't be higher than nodes amount in graph");
 		if (landmarksAmount <= 0)
 			throw std::invalid_argument("amount of landmarks have to be higher than 0");
@@ -80,7 +81,7 @@ namespace PathingLib
 		int* distanceArray = new int[g.getNodesAmount()];
 		std::fill_n(distanceArray, g.getNodesAmount(), Utility::getINF());
 		int* nodesBeforeArray = new int[g.getNodesAmount()];
-		
+
 		std::priority_queue< std::pair<int, int>,
 			std::vector<std::pair<int, int>>,
 			std::greater<std::pair<int, int>> > q;
@@ -116,6 +117,42 @@ namespace PathingLib
 		return path;
 	}
 
+	int ALT::getPathDist(int sourceIndex, int targetIndex) {
+		int* distanceArray = new int[g.getNodesAmount()];
+		std::fill_n(distanceArray, g.getNodesAmount(), Utility::getINF());
+
+		std::priority_queue< std::pair<int, int>,
+			std::vector<std::pair<int, int>>,
+			std::greater<std::pair<int, int>> > q;
+
+		distanceArray[sourceIndex] = 0;
+		q.push(make_pair(heuristic(sourceIndex, targetIndex), sourceIndex));
+
+		while (!q.empty()) {
+			P top = q.top();
+			q.pop();
+			int node = top.second;
+			int distance = distanceArray[node];
+			int* out_edges = g.getOutEdges(node);
+			for (int i = 0; i < g.getOutEdgesAmount(node); i++) {
+				int next_node = g.getEdge(out_edges[i]).target;
+				int dist_next_node = distance + g.getEdge(out_edges[i]).distance;
+				int heuristic_ = heuristic(next_node, targetIndex);
+				int heuristic_dist = dist_next_node + heuristic_;
+				if (dist_next_node < distanceArray[next_node] &&
+					heuristic_dist < distanceArray[targetIndex]) {
+					distanceArray[next_node] = dist_next_node;
+					q.push(make_pair(heuristic_dist, next_node));
+				}
+			}
+		}
+		if (distanceArray[targetIndex] == Utility::getINF())
+			return -1;
+		int dist = distanceArray[targetIndex];
+		delete[] distanceArray;
+		return dist;
+	}
+
 	int ALT::heuristic(int node, int target) {
 		int heuristic = 0;
 		for (int i = 0; i < landmarksAmount; i++) {
@@ -128,12 +165,23 @@ namespace PathingLib
 		return heuristic;
 	}
 
-	ALT::~ALT(){
+	/*ALT::ALT(const ALT& o) {
+		g = o.g;
+		landmarksAmount = o.landmarksAmount;
+		for (int i = 0; i < landmarksAmount; i++) {
+			dijkstraLandmarks[i] = new int[g.getNodesAmount()]();
+			for (int j = 0; j < g.getNodesAmount(); j++) {
+				dijkstraLandmarks[i][j] = o.dijkstraLandmarks[i][j];
+			}
+		}
+	}
+
+	ALT::~ALT() {
 		for (int i = 0; i < landmarksAmount; i++) {
 			if (dijkstraLandmarks[i])
 				delete[] dijkstraLandmarks[i];
 		}
 		if (dijkstraLandmarks)
 			delete[] dijkstraLandmarks;
-	}
+	}*/
 }

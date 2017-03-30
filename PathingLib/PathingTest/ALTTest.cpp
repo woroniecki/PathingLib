@@ -61,6 +61,9 @@ namespace PathingTest
 			PathingLib::Path p_ = alt_furthest.getPath(0, 5);
 			Assert::AreEqual(4.0, p_.getDistance('m'), L"Wrong distance of path in alt with the furthest landmarks distance", LINE_INFO());
 			Assert::AreEqual(5, p_.getNodesAmount(), L"Wrong nodes amount of path with the furthest landmarks distance", LINE_INFO());
+		
+			int distance = alt.getPathDist(0, 5);
+			Assert::AreEqual(400, distance, L"Wrong distance of path", LINE_INFO());
 		}
 
 	};

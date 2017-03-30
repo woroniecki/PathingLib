@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ALT.h" />
+    <ClInclude Include="CHGraph.h" />
     <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Path.h" />
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ALT.cpp" />
+    <ClCompile Include="CHGraph.cpp" />
     <ClCompile Include="Dijkstra.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>

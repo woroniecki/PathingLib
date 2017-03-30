@@ -140,7 +140,7 @@ namespace PathingLib
 		file.close();
 	}
 
-	bool Graph::addNode(double latitude, double longtitude) {
+	NODE Graph::addNode(double latitude, double longtitude) {
 		if (nodesAmount >= nodesMaxAmount) {
 			throw std::out_of_range("Can't add more nodes, because array of nodes is full");
 		}
@@ -148,10 +148,10 @@ namespace PathingLib
 		nodes[nodesAmount].latitude = latitude;
 		nodes[nodesAmount].longtitude = longtitude;
 		nodesAmount++;
-		return true;
+		return nodes[nodesAmount - 1];
 	}
 
-	bool Graph::addDirectedEdge(int source, int target, int distance) {
+	EDGE Graph::addDirectedEdge(int source, int target, int distance) {
 		if (edgesAmount >= edgesMaxAmount)
 			throw std::out_of_range("Can't add more edges, because array of egdes is full");
 		if(source >= nodesMaxAmount)
@@ -166,7 +166,7 @@ namespace PathingLib
 		nodes[source].addOutEdge(edgesAmount); 
 	    nodes[target].addInEdge(edgesAmount);
 		edgesAmount++;
-		return true;
+		return edges[edgesAmount - 1];
 	}
 
 	NODE Graph::getNode(int index) {
