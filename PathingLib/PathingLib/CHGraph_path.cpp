@@ -27,16 +27,17 @@ namespace PathingLib
 		std::fill_n(distance_T, nodesAmount, 90000000);
 		distance_T[targetIndex] = 0;
 
-		int* from_S = new int[nodesAmount];
-		from_S[sourceIndex] = -1;
+		int* from_S_EDGE = new int[nodesAmount];
+		from_S_EDGE[sourceIndex] = -1;
 
-		int* from_T = new int[nodesAmount];
-		from_T[targetIndex] = -1;
+		int* from_T_EDGE = new int[nodesAmount];
+		from_T_EDGE[targetIndex] = -1;
 
 		queue.push(make_pair(alt->heuristic(sourceIndex, targetIndex), make_pair(sourceIndex, true)));
 		queue.push(make_pair(alt->heuristic(targetIndex, sourceIndex), make_pair(targetIndex, false)));
 
 		int min_distance = INF_;
+		int jointNodeID = -1;
 		int visitedNodes = 0;
 
 		while (!queue.empty()) {
@@ -59,6 +60,7 @@ namespace PathingLib
 				edgesOfNode = nodes[node].inHigherEdges;
 				edges_amount = nodes[node].inHEdgesAmount;
 			}
+
 			for (int i = 0; i < edges_amount; i++) {
 				int next_node;
 				if (forward) {
@@ -82,11 +84,13 @@ namespace PathingLib
 					if (dist_next_node < distance_S[next_node] &&
 						heuristic_dist < min_distance) {
 						distance_S[next_node] = dist_next_node;
+						from_S_EDGE[next_node] = edgesOfNode[i];
 						if (distance_S[next_node] != INF_ &&
 							distance_T[next_node] != INF_) {
 							int temp_min_dist = distance_S[next_node] + distance_T[next_node];
 							if (min_distance > temp_min_dist) {
 								min_distance = temp_min_dist;
+								jointNodeID = next_node;
 							}
 						}
 						else {
@@ -98,11 +102,13 @@ namespace PathingLib
 					if (dist_next_node < distance_T[next_node] &&
 						heuristic_dist < min_distance) {
 						distance_T[next_node] = dist_next_node;
+						from_T_EDGE[next_node] = edgesOfNode[i];
 						if (distance_S[next_node] != INF_ &&
 							distance_T[next_node] != INF_) {
 							int temp_min_dist = distance_S[next_node] + distance_T[next_node];
 							if (min_distance > temp_min_dist) {
 								min_distance = temp_min_dist;
+								jointNodeID = next_node;
 							}
 						}
 						else {
@@ -112,8 +118,101 @@ namespace PathingLib
 				}
 			}
 		}
-		//cout << "    Visited Nodes: " << visitedNodes << endl;
-		//cout << "    Distance: " << min_distance << endl;
+		if (jointNodeID == -1)
+			return -1;
+
+		getPathJSON(jointNodeID, from_S_EDGE, from_T_EDGE);
+
+		delete[] distance_S;
+		delete[] distance_T;
+		delete[] from_S_EDGE;
+		delete[] from_T_EDGE;
+
 		return min_distance;
+	}
+
+	string CHGraph::getPathJSON(int jointNode, int* fromSEDGES, int* fromTEDGES) {
+		int amount = getNodesAmount(jointNode, fromSEDGES, true) + getNodesAmount(jointNode, fromTEDGES, false);
+		int* nodes = new int[++amount];
+
+		fillArrayWithPath(nodes, jointNode, fromSEDGES, fromTEDGES);
+
+		for (int i = 0; i < amount; i++) {
+			cout << i << " NODE: " << nodes[i] << endl;
+		}
+
+		delete[] nodes;
+		return " ";
+	}
+
+	void CHGraph::fillArrayWithPath(int* fillArray, int jointNode, int* fromSEDGES, int* fromTEDGES) {
+
+		int index = runFillingArray(jointNode, fillArray, fromSEDGES, true, 0);
+		cout << "NEXTfillingTOtarget" << endl;
+		runFillingArray(jointNode, fillArray, fromTEDGES, false, index);
+
+	}
+
+	int CHGraph::runFillingArray(int currentNode, int* fillArray, int* arrayEdges, bool directionToSource, int index) {
+		int currentEdge = -1;
+
+		cout << "    runFill:" << currentNode << endl;
+
+		currentEdge = arrayEdges[currentNode];
+
+		if (currentEdge == -1)
+			return index;
+
+		int recNode;
+
+		if (directionToSource) {
+			recNode = edges[arrayEdges[currentNode]].edge->source;
+			index = runFillingArray(recNode, fillArray, arrayEdges, directionToSource, index);
+			return fillColumnsOfArrayWithNodes(arrayEdges[currentNode], fillArray, arrayEdges, index);
+		}
+		else {
+			recNode = edges[arrayEdges[currentNode]].edge->target;
+			index = fillColumnsOfArrayWithNodes(arrayEdges[currentNode], fillArray, arrayEdges, index);
+			return runFillingArray(recNode, fillArray, arrayEdges, directionToSource, index);
+		}
+	}
+
+	int CHGraph::fillColumnsOfArrayWithNodes(int ID, int* fillArray, int* arrayEdges, int firstIndex) {
+
+		cout << "        FILLING: " << ID << " " << edges[ID].firstEdgePart << " " << edges[ID].secondEdgePart << endl;
+		if (!edges[ID].shortcut) {
+			cout << "            FILL: " << firstIndex << endl;
+			fillArray[firstIndex] = edges[ID].edge->source;
+			cout << "            FILL: " << firstIndex + 1 << endl;
+			fillArray[++firstIndex] = edges[ID].edge->target;
+			return firstIndex;
+		}
+
+		cout << "        NEXT FILLING: " << edges[ID].firstEdgePart << endl;
+		firstIndex = fillColumnsOfArrayWithNodes(edges[ID].firstEdgePart, fillArray, arrayEdges, firstIndex);
+		cout << "        NEXT FILLING: " << edges[ID].secondEdgePart << endl;
+		firstIndex = fillColumnsOfArrayWithNodes(edges[ID].secondEdgePart, fillArray, arrayEdges, firstIndex);
+
+		return firstIndex;
+	}
+
+	int CHGraph::getNodesAmount(int currentNode, int* arrayEdges, bool directionToSource) {
+		int amount = 0;
+		int currentEdge = -1;
+
+		currentEdge = arrayEdges[currentNode];
+
+		while (currentEdge != -1) {
+			amount += edges[currentEdge].edgesAmount;
+			if (directionToSource) {
+				currentNode = edges[arrayEdges[currentNode]].edge->source;
+			}
+			else {
+				currentNode = edges[arrayEdges[currentNode]].edge->target;
+			}
+			currentEdge = arrayEdges[currentNode];
+		}
+
+		return amount;
 	}
 }

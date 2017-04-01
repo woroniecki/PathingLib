@@ -36,6 +36,7 @@ namespace PathingLib
 			EDGE* edge;
 			bool shortcut = false;
 			int firstEdgePart = -1, secondEdgePart = -1;
+			int edgesAmount = 1;
 	};
 
 	class CHGraph
@@ -66,7 +67,13 @@ namespace PathingLib
 		void extendGraph();
 		void extendGraphNodes();
 		void extendGraphEdges();
-		void addShortcutEdge(int source, int target, int distance, int firstEDGEpartID, int secondEDGEpartID, bool = true);
+		void addShortcutEdge(int source, int target, int distance, int firstEDGEpartID, int secondEDGEpartID, int amountOfEdges, bool = true);
+
+		std::string getPathJSON(int jointNode, int* fromSEDGES, int* fromTEDGES);
+		void fillArrayWithPath(int* fillArray, int jointNode, int* fromSEDGES, int* fromTEDGES);
+		int runFillingArray(int currentNode, int* fillArray, int* arrayEdges, bool directionToSource, int index);
+		int fillColumnsOfArrayWithNodes(int edgeID, int* fillArray, int* arrayEdges, int firstIndex);
+		int getNodesAmount(int startNode, int* arrayEDGES, bool directionIN);
 
 		void CHGraph::preprocesing();
 		void setHigherNeighbours();
