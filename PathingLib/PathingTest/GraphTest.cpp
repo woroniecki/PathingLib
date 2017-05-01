@@ -146,7 +146,8 @@ namespace PathingTest
 			PathingLib::EDGE e = g.getEdge(12);
 			Assert::AreEqual(4, e.source, L"Incorrect edge source", LINE_INFO());
 			Assert::AreEqual(2, e.target, L"Incorrect edge target", LINE_INFO());
-			Assert::AreEqual(100, e.distance, L"Incorrect edge distance", LINE_INFO());
+			Assert::AreEqual(70, e.distance, L"Incorrect edge distance", LINE_INFO());
+			Assert::AreEqual(100, e.realDistance, L"Incorrect edge distance", LINE_INFO());
 
 			bool exceptionRuntimeError = false;
 			try

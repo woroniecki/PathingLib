@@ -13,7 +13,7 @@ namespace PathingLib
 {
 	typedef pair<int, pair<int, bool>> P_p;
 
-	int CHGraph::getPath(int sourceIndex, int targetIndex) {
+	string CHGraph::getPath(int sourceIndex, int targetIndex) {
 		// <dystans, <node, kierunek>>
 		int INF_ = Utility::getINF();
 		std::priority_queue < std::pair<int, std::pair<int, bool>>,
@@ -26,6 +26,14 @@ namespace PathingLib
 		int* distance_T = new int[nodesAmount];
 		std::fill_n(distance_T, nodesAmount, 90000000);
 		distance_T[targetIndex] = 0;
+
+		int* real_distance_S = new int[nodesAmount];
+		std::fill_n(real_distance_S, nodesAmount, 90000000);
+		real_distance_S[sourceIndex] = 0;
+
+		int* real_distance_T = new int[nodesAmount];
+		std::fill_n(real_distance_T, nodesAmount, 90000000);
+		real_distance_T[targetIndex] = 0;
 
 		int* from_S_EDGE = new int[nodesAmount];
 		from_S_EDGE[sourceIndex] = -1;
@@ -45,6 +53,7 @@ namespace PathingLib
 			P_p top = queue.top();
 			queue.pop();
 			int distance;
+			int realDistance;
 			int node = top.second.first;
 			bool forward = top.second.second;
 			int* edgesOfNode;
@@ -84,7 +93,10 @@ namespace PathingLib
 					if (dist_next_node < distance_S[next_node] &&
 						heuristic_dist < min_distance) {
 						distance_S[next_node] = dist_next_node;
+						real_distance_S[next_node] = dist_next_node;
 						from_S_EDGE[next_node] = edgesOfNode[i];
+
+						real_distance_S[next_node] = real_distance_S[node] + edges[edgesOfNode[i]].edge->realDistance;
 						if (distance_S[next_node] != INF_ &&
 							distance_T[next_node] != INF_) {
 							int temp_min_dist = distance_S[next_node] + distance_T[next_node];
@@ -103,6 +115,8 @@ namespace PathingLib
 						heuristic_dist < min_distance) {
 						distance_T[next_node] = dist_next_node;
 						from_T_EDGE[next_node] = edgesOfNode[i];
+
+						real_distance_T[next_node] = real_distance_T[node] + edges[edgesOfNode[i]].edge->realDistance;
 						if (distance_S[next_node] != INF_ &&
 							distance_T[next_node] != INF_) {
 							int temp_min_dist = distance_S[next_node] + distance_T[next_node];
@@ -119,30 +133,40 @@ namespace PathingLib
 			}
 		}
 		if (jointNodeID == -1)
-			return -1;
+			return " ";// failure trzeb coœ znaleŸæ
 
-		getPathJSON(jointNodeID, from_S_EDGE, from_T_EDGE);
-
+		string path = getPathJSON(jointNodeID, from_S_EDGE, from_T_EDGE, real_distance_S[jointNodeID] + real_distance_T[jointNodeID]);
+	
 		delete[] distance_S;
 		delete[] distance_T;
+		delete[] real_distance_S;
+		delete[] real_distance_T;
 		delete[] from_S_EDGE;
 		delete[] from_T_EDGE;
 
-		return min_distance;
+		return path;
 	}
 
-	string CHGraph::getPathJSON(int jointNode, int* fromSEDGES, int* fromTEDGES) {
+	string CHGraph::getPathJSON(int jointNode, int* fromSEDGES, int* fromTEDGES, int distance) {
 		int amount = getNodesAmount(jointNode, fromSEDGES, true) + getNodesAmount(jointNode, fromTEDGES, false);
 		int* nodes = new int[++amount];
+		string returnVal = "{ \'paths\':\n [{ \'instructions\': [\n";
+		returnVal += "{ \'distance\' : " + to_string(distance) + ",\n \'interval\' : [0, " + to_string(amount - 1) +"] } ],\n";
 
 		fillArrayWithPath(nodes, jointNode, fromSEDGES, fromTEDGES);
 
+		returnVal += "\'points\':\n { \'coordinates\': [\n";
+
 		for (int i = 0; i < amount; i++) {
-			cout << i << " NODE: " << nodes[i] << endl;
+			returnVal += "[\n" + this->nodes[nodes[i]].node->longtitudeSTRING + ",\n" + this->nodes[nodes[i]].node->latitudeSTRING + "\n]\n";
+			if (i + 1 <= amount)
+				returnVal += ",";
 		}
+		returnVal += "], \'type\': \'LineString\'}";
+		returnVal += "\n";
 
 		delete[] nodes;
-		return " ";
+		return returnVal;
 	}
 
 	void CHGraph::fillArrayWithPath(int* fillArray, int jointNode, int* fromSEDGES, int* fromTEDGES) {

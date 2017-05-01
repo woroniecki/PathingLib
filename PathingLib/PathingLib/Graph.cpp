@@ -30,7 +30,10 @@ namespace PathingLib
 		out_edges_amount = o.out_edges_amount;
 	}
 
-	NODE::NODE(int index, double longtitude, double latitude) : index(index), longtitude(longtitude), latitude(latitude) {}
+	NODE::NODE(int index, double longtitude, double latitude) : index(index), longtitude(longtitude), latitude(latitude) {
+		this->longtitudeSTRING = to_string(longtitude);
+		this->latitudeSTRING = to_string(latitude);
+	}
 
 	void NODE::addInEdge(int edgeIndex) {
 		in_edges = Utility::addFieldToArray(in_edges, in_edges_amount);
@@ -57,7 +60,7 @@ namespace PathingLib
 		this->edgesMaxAmount = edgesMaxAmount;
 	}
 
-	Graph Graph::loadGraphFromFile(std::string nodesPath, std::string edgesPath, int maxEdgesAmount_) {
+	Graph Graph::loadGraphFromFile(std::string nodesPath, std::string edgesPath, int maxEdgesAmount_, float bikeScale) {
 		int nodesAmount = Utility::getLinesAmountInFile(nodesPath);
 		int edgesAmount = Utility::getLinesAmountInFile(edgesPath);
 		if (maxEdgesAmount_ != -1)
@@ -70,7 +73,7 @@ namespace PathingLib
 		for (string line; getline(inputNode, line); )
 		{
 			vector<string> nodeArgs = Utility::separateLine(line);
-			
+
 			double lat = std::stod(nodeArgs[1].c_str());
 			double lng = std::stod(nodeArgs[2].c_str());
 
@@ -86,9 +89,24 @@ namespace PathingLib
 
 			int source = std::stod(edgeArgs[0].c_str());
 			int target = std::stod(edgeArgs[1].c_str());
-			int distance = int(std::stod(edgeArgs[2].c_str()) * 100); // to centimiters
+			int realDistance = int(std::stod(edgeArgs[2].c_str()) * 100); // to centimiters
+			bool isBike = 0;
+			try {
+				isBike = bool(std::stod(edgeArgs[3].c_str()));
+			}
+			catch (int e) {
 
-			graph.addDirectedEdge(source, target, distance);
+			}
+
+			int distance = 0;
+			if (isBike) {
+				distance = int(bikeScale * float(realDistance));
+			}
+			else {
+				distance = realDistance;
+			}
+
+			graph.addDirectedEdge(source, target, realDistance, distance);
 			edgeArgs.clear();
 		}
 		inputEdge.close();
@@ -100,7 +118,7 @@ namespace PathingLib
 		string tempLine = "";
 		ofstream nodesFile;
 		nodesFile.open(nodesPath);
-		for (int i = 0; i<nodesAmount; i++) {
+		for (int i = 0; i < nodesAmount; i++) {
 			tempLine = "";
 			tempLine += to_string(i) + " ";
 			tempLine += to_string(nodes[i].latitude) + " ";
@@ -113,11 +131,15 @@ namespace PathingLib
 
 		ofstream edgesFile;
 		edgesFile.open(edgesPath);
-		for (int i = 0; i<edgesAmount; i++) {
+		for (int i = 0; i < edgesAmount; i++) {
 			tempLine = "";
 			tempLine += to_string(edges[i].source) + " ";
 			tempLine += to_string(edges[i].target) + " ";
-			tempLine += to_string(((float)edges[i].distance / 100)) + " ";
+			tempLine += to_string(((float)edges[i].realDistance / 100)) + " ";
+			if(int(edges[i].distance) != int(edges[i].realDistance))
+				tempLine += "1 ";
+			else
+				tempLine += "0 ";
 			if (i < edgesAmount - 1)
 				tempLine += "\n";
 			edgesFile << tempLine;
@@ -150,24 +172,30 @@ namespace PathingLib
 		nodes[nodesAmount].index = nodesAmount;
 		nodes[nodesAmount].latitude = latitude;
 		nodes[nodesAmount].longtitude = longtitude;
+		nodes[nodesAmount].longtitudeSTRING = to_string(longtitude);
+		nodes[nodesAmount].latitudeSTRING = to_string(latitude);
 		nodesAmount++;
 		return nodes[nodesAmount - 1];
 	}
 
-	EDGE Graph::addDirectedEdge(int source, int target, int distance) {
+	EDGE Graph::addDirectedEdge(int source, int target, int realDistance, int distance) {
 		if (edgesAmount >= edgesMaxAmount)
 			throw std::out_of_range("Can't add more edges, because array of egdes is full");
-		if(source >= nodesMaxAmount)
+		if (source >= nodesMaxAmount)
 			throw std::out_of_range("Can't add edge, because source node is out of nodes range");
-		if(target >= nodesMaxAmount)
+		if (target >= nodesMaxAmount)
 			throw std::out_of_range("Can't add edge, because target node is out of nodes range");
 		edges[edgesAmount].index = edgesAmount;
 		edges[edgesAmount].source = source;
 		edges[edgesAmount].target = target;
-		edges[edgesAmount].distance = distance;
+		edges[edgesAmount].realDistance = realDistance;
+		if (distance == -1)
+			edges[edgesAmount].distance = realDistance;
+		else
+			edges[edgesAmount].distance = distance;
 
-		nodes[source].addOutEdge(edgesAmount); 
-	    nodes[target].addInEdge(edgesAmount);
+		nodes[source].addOutEdge(edgesAmount);
+		nodes[target].addInEdge(edgesAmount);
 		edgesAmount++;
 		return edges[edgesAmount - 1];
 	}
@@ -186,36 +214,36 @@ namespace PathingLib
 		return edges[index];
 	}
 
-	int Graph::getNodesAmount(){
+	int Graph::getNodesAmount() {
 		return nodesAmount;
 	}
 
-	int Graph::getEdgesAmount(){
+	int Graph::getEdgesAmount() {
 		return edgesAmount;
 	}
 
-	int* Graph::getInEdges(int nodeIndex){
+	int* Graph::getInEdges(int nodeIndex) {
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}
 		return nodes[nodeIndex].in_edges;
 	}
 
-	int* Graph::getOutEdges(int nodeIndex){
+	int* Graph::getOutEdges(int nodeIndex) {
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}
 		return nodes[nodeIndex].out_edges;
 	}
 
-	int Graph::getInEdgesAmount(int nodeIndex){
+	int Graph::getInEdgesAmount(int nodeIndex) {
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}
 		return nodes[nodeIndex].in_edges_amount;
 	}
 
-	int Graph::getOutEdgesAmount(int nodeIndex){
+	int Graph::getOutEdgesAmount(int nodeIndex) {
 		if (nodeIndex >= nodesAmount) {
 			throw std::out_of_range("Can't get node, because index is out of nodes range");
 		}

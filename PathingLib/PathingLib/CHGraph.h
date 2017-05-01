@@ -52,7 +52,7 @@ namespace PathingLib
 
 		void PATHINGLIB_API saveGraphToFile(string nodesPath, string edgesPath);
 
-		int PATHINGLIB_API getPath(int sourceIndex, int targetIndex);
+		string PATHINGLIB_API getPath(int sourceIndex, int targetIndex);
 
 		// int PATHINGLIB_API getPath(int sourceIndex, int targetIndex);
 
@@ -67,9 +67,9 @@ namespace PathingLib
 		void extendGraph();
 		void extendGraphNodes();
 		void extendGraphEdges();
-		void addShortcutEdge(int source, int target, int distance, int firstEDGEpartID, int secondEDGEpartID, int amountOfEdges, bool = true);
+		void addShortcutEdge(int source, int target, int distance, int realDistance, int firstEDGEpartID, int secondEDGEpartID, int amountOfEdges, bool = true);
 
-		std::string getPathJSON(int jointNode, int* fromSEDGES, int* fromTEDGES);
+		std::string getPathJSON(int jointNode, int* fromSEDGES, int* fromTEDGES, int distance);
 		void fillArrayWithPath(int* fillArray, int jointNode, int* fromSEDGES, int* fromTEDGES);
 		int runFillingArray(int currentNode, int* fillArray, int* arrayEdges, bool directionToSource, int index);
 		int fillColumnsOfArrayWithNodes(int edgeID, int* fillArray, int* arrayEdges, int firstIndex);

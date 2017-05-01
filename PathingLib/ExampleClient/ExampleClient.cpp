@@ -24,16 +24,15 @@ int main()
 	PathingLib::Path p = alt.getPath(0, 1000);
 
 	cout << "Path distance: " << p.getDistance('k') << " kilometers"<< endl;
-	p.saveToFileCSV("../ExampleClient/examplePath.txt");
+	p.saveToFileCSV("../ExampleClient/examplePath.txt");*/
 
 	PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("../PathingTest/nodes.txt", "../PathingTest/edges.txt", 100);
 	PathingLib::ALT alt(g, 3, false);
 	PathingLib::CHGraph chgraph(g, alt);
-	chgraph.saveGraphToFile("../PathingTest/CHnodes.txt", "../PathingTest/CHedges.txt"); */
+	chgraph.saveGraphToFile("../PathingTest/CHnodes.txt", "../PathingTest/CHedges.txt"); 
 
-	PathingLib::CHGraph chgraph("../PathingTest/CHnodes.txt", "../PathingTest/CHedges.txt");
-	cout << chgraph.getPath(0, 5) << endl;
-
+	/* PathingLib::CHGraph chgraph("../PathingTest/CHnodes.txt", "../PathingTest/CHedges.txt");
+	cout << chgraph.getPath(0, 5) << endl; */
     return 0;
 }
 

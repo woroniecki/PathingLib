@@ -35,6 +35,7 @@ namespace PathingLib
 		
 		nodes = new CH_NODE[nodesAmount]();
 		ifstream inputNode(nodesPath);
+		int index = 0;
 		for (string line; getline(inputNode, line); )
 		{
 			vector<string> nodeArgs = Utility::separateLine(line);
@@ -44,14 +45,16 @@ namespace PathingLib
 			double lng = std::stod(nodeArgs[2].c_str());
 			int ch_lvl = int(std::stod(nodeArgs[3].c_str()));
 
-			nodes[index].node = &g->addNode(lat, lng);
+			g->addNode(lat, lng);
+			nodes[index].node = &g->nodes[index];
 			nodes[index].contract_lvl = ch_lvl;
 			
 			nodeArgs.clear();
+			index++;
 		}
 		inputNode.close();
 
-		int index = 0;
+		index = 0;
 		edges = new CH_EDGE[edgesAmount]();
 		ifstream inputEdge(edgesPath);
 		for (string line; getline(inputEdge, line); )
@@ -61,12 +64,13 @@ namespace PathingLib
 			int source = std::stod(edgeArgs[0].c_str());
 			int target = std::stod(edgeArgs[1].c_str());
 			int distance = int(std::stod(edgeArgs[2].c_str()) * 100); // to centimiters
-			bool shortcut = std::stod(edgeArgs[3].c_str());
-			int first_edge = std::stod(edgeArgs[4].c_str());
-			int second_edge = std::stod(edgeArgs[5].c_str());
-			int amountOfEdges = std::stod(edgeArgs[6].c_str());
+			int realdistance = int(std::stod(edgeArgs[3].c_str()) * 100); // to centimiters
+			bool shortcut = std::stod(edgeArgs[4].c_str());
+			int first_edge = std::stod(edgeArgs[5].c_str());
+			int second_edge = std::stod(edgeArgs[6].c_str());
+			int amountOfEdges = std::stod(edgeArgs[7].c_str());
 
-			addShortcutEdge(source, target, distance, first_edge, second_edge, amountOfEdges, shortcut);
+			addShortcutEdge(source, target, distance, realdistance, first_edge, second_edge, amountOfEdges, shortcut);
 
 			edgeArgs.clear();
 			index++;
@@ -91,6 +95,9 @@ namespace PathingLib
 		int distSource = -1;
 		int distTarget = -1;
 		int distance = -1;
+		int realDistSource = -1;
+		int realDistTarget = -1;
+		int realDistance = -1;
 		int addedEdges = 0;
 
 		for (int i = 0; i < g->getNodesAmount(); i++) {
@@ -106,6 +113,7 @@ namespace PathingLib
 				if (nodes[sourceID].contract_lvl != -1)
 					continue;
 				distSource = edges[in_edgesNode[inEdgeID]].edge->distance;
+				realDistSource = edges[in_edgesNode[inEdgeID]].edge->realDistance;
 
 				for (int outEdgeID = 0; outEdgeID < out_edges_amount_N; outEdgeID++) {
 					targetID = edges[out_edgesNode[outEdgeID]].edge->target;
@@ -114,14 +122,16 @@ namespace PathingLib
 					if (targetID == sourceID)
 						continue;
 					distTarget = edges[out_edgesNode[outEdgeID]].edge->distance;
+					realDistTarget = edges[out_edgesNode[outEdgeID]].edge->realDistance;
 					distance = distSource + distTarget;
+					realDistance = realDistSource + realDistTarget;
 
 					if (distance <= alt->getPathDist(sourceID, targetID)) {
-						// TRZEBA ŒCIE¯KE ROWEROW¥ JESZCZE PARAMETR DODAÆ!!!!
 						addShortcutEdge(
 							sourceID,
 							targetID,
 							distance,
+							realDistance,
 							in_edgesNode[inEdgeID],
 							out_edgesNode[outEdgeID],
 							edges[in_edgesNode[inEdgeID]].edgesAmount + edges[out_edgesNode[outEdgeID]].edgesAmount,
@@ -133,8 +143,8 @@ namespace PathingLib
 		}
 	}
 
-	void CHGraph::addShortcutEdge(int source, int target, int distance, int firstEDGEpartID, int secondEDGEpartID, int amountOfEdges, bool isShortCut) {
-		g->addDirectedEdge(source, target, distance);
+	void CHGraph::addShortcutEdge(int source, int target, int distance, int realDistance, int firstEDGEpartID, int secondEDGEpartID, int amountOfEdges, bool isShortCut) {
+		g->addDirectedEdge(source, target, realDistance, distance);
 
 		edges[edgesAmount].edge = &g->edges[edgesAmount];
 		edges[edgesAmount].shortcut = isShortCut;
@@ -205,6 +215,7 @@ namespace PathingLib
 			tempLine += to_string(edges[i].edge->source) + " ";
 			tempLine += to_string(edges[i].edge->target) + " ";
 			tempLine += to_string(((float)edges[i].edge->distance / 100)) + " ";
+			tempLine += to_string(((float)edges[i].edge->realDistance / 100)) + " ";
 			tempLine += to_string((int)edges[i].shortcut) + " ";
 			tempLine += to_string((int)edges[i].firstEdgePart) + " ";
 			tempLine += to_string((int)edges[i].secondEdgePart) + " ";

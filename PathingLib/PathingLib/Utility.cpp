@@ -73,5 +73,4 @@ namespace PathingLib
 		s += to_string(y2) + ") ";
 		return s;
 	}
-
 }

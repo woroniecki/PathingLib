@@ -18,7 +18,9 @@ namespace PathingLib
 	public:
 		int index = -1;
 		double longtitude;
+		string longtitudeSTRING;
 		double latitude;
+		string latitudeSTRING;
 		int* in_edges;
 		int in_edges_amount = 0;
 		int* out_edges;
@@ -43,7 +45,7 @@ namespace PathingLib
 	class EDGE {
 	public:
 		int index = -1;
-		int source, target, distance;
+		int source, target, realDistance, distance;
 
 		PATHINGLIB_API EDGE();
 	};
@@ -73,7 +75,7 @@ namespace PathingLib
 		// Example:
 		// 0 1 2.11
 		// 1 0 2.11 
-		static Graph PATHINGLIB_API loadGraphFromFile(std::string nodesPath, std::string edgesPath, int = -1);
+		static Graph PATHINGLIB_API loadGraphFromFile(std::string nodesPath, std::string edgesPath, int = -1, float = 0.7f);
 
 		// save graph to file
 		// create two files with nodes and edges
@@ -86,7 +88,7 @@ namespace PathingLib
 		NODE PATHINGLIB_API addNode(double latitude, double longtitude);
 
 		// add edge from source to target, if array is not full
-		EDGE PATHINGLIB_API addDirectedEdge(int source, int target, int distance);
+		EDGE PATHINGLIB_API addDirectedEdge(int source, int target, int distance, int bikeDistance = -1);
 
 		// return node with index
 		NODE PATHINGLIB_API getNode(int index);

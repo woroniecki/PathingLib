@@ -19,7 +19,7 @@ namespace PathingTest
 		{
 			PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("../PathingTest/nodes.txt", "../PathingTest/edges.txt");
 			PathingLib::Path p = PathingLib::Dijkstra::getPath(0, 5, g);
-			Assert::AreEqual(4.0, p.getDistance('m'), L"Wrong distance of path", LINE_INFO());
+			Assert::AreEqual(3.1, p.getDistance('m'), L"Wrong distance of path", LINE_INFO());
 			Assert::AreEqual(5, p.getNodesAmount(), L"Wrong nodes amount in path", LINE_INFO());
 
 			std::vector<PathingLib::NODE> nodes = p.nodes;
