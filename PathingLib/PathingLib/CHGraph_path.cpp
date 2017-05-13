@@ -162,7 +162,7 @@ namespace PathingLib
 			if (i + 1 <= amount)
 				returnVal += ",";
 		}
-		returnVal += "], \'type\': \'LineString\'}";
+		returnVal += "], \'type\': \'LineString\'} \n";
 		returnVal += "\n";
 
 		delete[] nodes;

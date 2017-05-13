@@ -249,4 +249,18 @@ namespace PathingLib
 		}
 		return nodes[nodeIndex].out_edges_amount;
 	}
+
+	int Graph::getTheClosestNode(int lng, int lat) {
+		int minDist = Utility::getINF();
+		int node = -1;
+		float dist = 0;
+		for (int i = 0; i < nodesAmount; i++) {
+			dist = abs(nodes[i].longtitude - lng) + abs(nodes[i].latitude - lat);
+			if (dist < minDist) {
+				node = i;
+				minDist = dist;
+			}
+		}
+		return node;
+	}
 }

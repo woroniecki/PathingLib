@@ -9,6 +9,7 @@
 
 #include "Graph.h"
 #include "Path.h"
+#include <string> 
 
 using namespace std;
 
@@ -35,6 +36,8 @@ namespace PathingLib
 
 		// return distance of path from source to target
 		int PATHINGLIB_API getPathDist(int sourceIndex, int targetIndex);
+
+		string PATHINGLIB_API ALT::getPathJSON(float lng1, float lat1, float lng2, float lat2);
 
 		int PATHINGLIB_API heuristic(int node, int target);
 		

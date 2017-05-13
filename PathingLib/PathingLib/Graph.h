@@ -114,6 +114,8 @@ namespace PathingLib
 		// return amount of edges from node with nodeIndex to any node
 		int PATHINGLIB_API getOutEdgesAmount(int nodeIndex);
 
+		int PATHINGLIB_API getTheClosestNode(int lng, int lat);
+
 	private:
 
 		// Current nodes amount

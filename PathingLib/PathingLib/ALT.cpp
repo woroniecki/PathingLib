@@ -52,7 +52,14 @@ namespace PathingLib
 			for (int i = 0; i < landmarksAmount; i++) {
 				landmarkNodeIndex = getTheFurthestLandmark(i);
 				dijkstraLandmarks[i] = Dijkstra::getDijkstraArray(landmarkNodeIndex, g);
+				int amount_of_notconnected_nodes = 0;
+				for (int j = 0; j < this->g->getNodesAmount(); j++) {
+					if (dijkstraLandmarks[i][j] == Utility::getINF()) {
+						amount_of_notconnected_nodes++;
+					}
+				}
 				landmarksIndexes[i] = landmarkNodeIndex;
+				cout << "    NOT CONNECTED NODES AMOUNT: " << amount_of_notconnected_nodes << endl;
 			}
 		}
 	}
@@ -80,6 +87,8 @@ namespace PathingLib
 	Path ALT::getPath(int sourceIndex, int targetIndex) {
 		int* distanceArray = new int[g->getNodesAmount()];
 		std::fill_n(distanceArray, g->getNodesAmount(), Utility::getINF());
+		int* realDistanceArray = new int[g->getNodesAmount()];
+		int* edgeBeforeArray = new int[g->getNodesAmount()];
 		int* nodesBeforeArray = new int[g->getNodesAmount()];
 
 		std::priority_queue< std::pair<int, int>,
@@ -87,6 +96,7 @@ namespace PathingLib
 			std::greater<std::pair<int, int>> > q;
 
 		distanceArray[sourceIndex] = 0;
+		realDistanceArray[sourceIndex] = 0;
 		nodesBeforeArray[sourceIndex] = -1;
 		q.push(make_pair(heuristic(sourceIndex, targetIndex), sourceIndex));
 
@@ -95,6 +105,7 @@ namespace PathingLib
 			q.pop();
 			int node = top.second;
 			int distance = distanceArray[node];
+			int realDistance = realDistanceArray[node];
 			int* out_edges = g->getOutEdges(node);
 			for (int i = 0; i < g->getOutEdgesAmount(node); i++) {
 				int next_node = g->getEdge(out_edges[i]).target;
@@ -104,6 +115,7 @@ namespace PathingLib
 				if (dist_next_node < distanceArray[next_node] &&
 					heuristic_dist < distanceArray[targetIndex]) {
 					distanceArray[next_node] = dist_next_node;
+					realDistanceArray[next_node] = realDistance + g->getEdge(out_edges[i]).realDistance;
 					nodesBeforeArray[next_node] = node;
 					q.push(make_pair(heuristic_dist, next_node));
 				}
@@ -111,10 +123,63 @@ namespace PathingLib
 		}
 		if (distanceArray[targetIndex] == Utility::getINF())
 			return Path();
-		Path path(targetIndex, nodesBeforeArray, *g, distanceArray[targetIndex]);
+		Path path(targetIndex, nodesBeforeArray, *g, realDistanceArray[targetIndex]);
 		delete[] distanceArray;
+		delete[] realDistanceArray;
 		delete[] nodesBeforeArray;
+		delete[] edgeBeforeArray;
 		return path;
+	}
+
+	string ALT::getPathJSON(float lng1, float lat1, float lng2, float lat2) {
+		int sourceIndex = g->getTheClosestNode(lng1, lat1);
+		int targetIndex = g->getTheClosestNode(lng2, lat2);
+		int* distanceArray = new int[g->getNodesAmount()];
+		std::fill_n(distanceArray, g->getNodesAmount(), Utility::getINF());
+		int* realDistanceArray = new int[g->getNodesAmount()];
+		int* edgeBeforeArray = new int[g->getNodesAmount()];
+		int* nodesBeforeArray = new int[g->getNodesAmount()];
+
+		std::priority_queue< std::pair<int, int>,
+			std::vector<std::pair<int, int>>,
+			std::greater<std::pair<int, int>> > q;
+
+		distanceArray[sourceIndex] = 0;
+		realDistanceArray[sourceIndex] = 0;
+		nodesBeforeArray[sourceIndex] = -1;
+		edgeBeforeArray[sourceIndex] = -1;
+		q.push(make_pair(heuristic(sourceIndex, targetIndex), sourceIndex));
+
+		while (!q.empty()) {
+			P top = q.top();
+			q.pop();
+			int node = top.second;
+			int distance = distanceArray[node];
+			int realDistance = realDistanceArray[node];
+			int* out_edges = g->getOutEdges(node);
+			for (int i = 0; i < g->getOutEdgesAmount(node); i++) {
+				int next_node = g->getEdge(out_edges[i]).target;
+				int dist_next_node = distance + g->getEdge(out_edges[i]).distance;
+				int heuristic_ = heuristic(next_node, targetIndex);
+				int heuristic_dist = dist_next_node + heuristic_;
+				if (dist_next_node < distanceArray[next_node] &&
+					heuristic_dist < distanceArray[targetIndex]) {
+					distanceArray[next_node] = dist_next_node;
+					realDistanceArray[next_node] = realDistance + g->getEdge(out_edges[i]).realDistance;
+					nodesBeforeArray[next_node] = node;
+					edgeBeforeArray[next_node] = out_edges[i];
+					q.push(make_pair(heuristic_dist, next_node));
+				}
+			}
+		}
+		if (distanceArray[targetIndex] == Utility::getINF())
+			return "";
+		string result = Path::getJSON(targetIndex, nodesBeforeArray, edgeBeforeArray, *g, realDistanceArray[targetIndex], 50000);
+		delete[] distanceArray;
+		delete[] realDistanceArray;
+		delete[] nodesBeforeArray;
+		delete[] edgeBeforeArray;
+		return result;
 	}
 
 	int ALT::getPathDist(int sourceIndex, int targetIndex) {

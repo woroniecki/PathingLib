@@ -46,7 +46,7 @@ namespace PathingTest
 			PathingLib::ALT alt(g, 2, false);
 
 			PathingLib::Path p = alt.getPath(0, 5);
-			Assert::AreEqual(3.1, p.getDistance('m'), L"Wrong distance of path", LINE_INFO());
+			Assert::AreEqual(4.0, p.getDistance('m'), L"Wrong distance of path", LINE_INFO());
 			Assert::AreEqual(5, p.getNodesAmount(), L"Wrong nodes amount in path", LINE_INFO());
 			
 			std::vector<PathingLib::NODE> nodes = p.nodes;
@@ -59,7 +59,7 @@ namespace PathingTest
 			PathingLib::ALT alt_furthest(g, 2, true);
 
 			PathingLib::Path p_ = alt_furthest.getPath(0, 5);
-			Assert::AreEqual(3.1, p_.getDistance('m'), L"Wrong distance of path in alt with the furthest landmarks distance", LINE_INFO());
+			Assert::AreEqual(4.0, p_.getDistance('m'), L"Wrong distance of path in alt with the furthest landmarks distance", LINE_INFO());
 			Assert::AreEqual(5, p_.getNodesAmount(), L"Wrong nodes amount of path with the furthest landmarks distance", LINE_INFO());
 		
 			int distance = alt.getPathDist(0, 5);

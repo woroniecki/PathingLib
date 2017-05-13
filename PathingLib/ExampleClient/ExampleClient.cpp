@@ -15,23 +15,27 @@ using namespace PathingLib;
 
 int main()
 {
-	/* cout << "Loading graph" << endl;
-	PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("../ExampleClient/andorraNodes.txt", "../ExampleClient/andorraEdges.txt");
+	cout << "Loading graph" << endl;
+	PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("../PathingTest/nodes.txt", "../PathingTest/edges.txt");
 	cout << "Prepare landmarks" << endl;
 	PathingLib::ALT alt(g, 4, false);
 
 	cout << "Run path finding algorithm" << endl;
-	PathingLib::Path p = alt.getPath(0, 1000);
+	string path = alt.getPathJSON (0.0f, -1.0f, 1.0f, 3.0f);
+	cout << path << endl;
 
-	cout << "Path distance: " << p.getDistance('k') << " kilometers"<< endl;
-	p.saveToFileCSV("../ExampleClient/examplePath.txt");*/
+	// p.saveToFileCSV("../ExampleClient/examplePath.txt");
 
-	PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("../PathingTest/nodes.txt", "../PathingTest/edges.txt", 100);
-	PathingLib::ALT alt(g, 3, false);
+	/* cout << "Loading graph" << endl;
+	PathingLib::Graph g = PathingLib::Graph::loadGraphFromFile("../ExampleClient/podlaskieNODES.txt", "../ExampleClient/podlaskieEDGES.txt", 6000000, 0.65f);
+	cout << "Prepare landmarks" << endl;
+	PathingLib::ALT alt(g, 4, false);
+	cout << "Preprocessing CH" << endl;
 	PathingLib::CHGraph chgraph(g, alt);
+	cout << "Save" << endl;
 	chgraph.saveGraphToFile("../PathingTest/CHnodes.txt", "../PathingTest/CHedges.txt"); 
 
-	/* PathingLib::CHGraph chgraph("../PathingTest/CHnodes.txt", "../PathingTest/CHedges.txt");
+	PathingLib::CHGraph chgraph("../PathingTest/CHnodes.txt", "../PathingTest/CHedges.txt");
 	cout << chgraph.getPath(0, 5) << endl; */
     return 0;
 }

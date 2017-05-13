@@ -9,6 +9,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <ctime>
 
 #include <iostream>
 
@@ -99,6 +100,9 @@ namespace PathingLib
 		int realDistTarget = -1;
 		int realDistance = -1;
 		int addedEdges = 0;
+		int lastAddedEdges = 0;
+
+		const clock_t begin_time = clock();
 
 		for (int i = 0; i < g->getNodesAmount(); i++) {
 			int node_index = node_indexes[i];
@@ -140,7 +144,29 @@ namespace PathingLib
 					}
 				}
 			}
+			if (i > 400000) {
+				if (i % 5 == 0) {
+					cout << i << " AMOUNT_TOTAL: " << addedEdges << " IN_ITER: " << addedEdges - lastAddedEdges << endl;
+					lastAddedEdges = addedEdges;
+				}
+			}
+			else if (i > 250000) {
+				if (i % 20 == 0) {
+					cout << i << " AMOUNT_TOTAL: " << addedEdges << " IN_ITER: " << addedEdges - lastAddedEdges << endl;
+					lastAddedEdges = addedEdges;
+				}
+			}
+			else {
+				if (i % 100 == 0) {
+					cout << i << " AMOUNT_TOTAL: " << addedEdges << " IN_ITER: " << addedEdges - lastAddedEdges << endl;
+					lastAddedEdges = addedEdges;
+				}
+			}
+			if (i % 1000 == 0)
+				cout << "TIME: " << float(clock() - begin_time) / CLOCKS_PER_SEC << endl;
 		}
+
+		cout << "Total time: " << float(clock() - begin_time) / CLOCKS_PER_SEC << " AMOUNT: " << addedEdges << endl;
 	}
 
 	void CHGraph::addShortcutEdge(int source, int target, int distance, int realDistance, int firstEDGEpartID, int secondEDGEpartID, int amountOfEdges, bool isShortCut) {

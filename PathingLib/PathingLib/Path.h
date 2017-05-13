@@ -43,7 +43,9 @@ namespace PathingLib
 		// lines save in stringline format
 		void PATHINGLIB_API saveToFileCSV(string filePath);
 
+		string static PATHINGLIB_API getJSON(int targetIndex, int* nodes, int* edges, Graph& g, int distance, int maxNodesAmount);
+
 	private:
-		int distance = 0;
+		int distance = -1;
 	};
 }
