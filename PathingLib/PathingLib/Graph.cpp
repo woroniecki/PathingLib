@@ -9,6 +9,10 @@
 
 #include <iostream>
 
+#ifndef M_PI
+#define M_PI    3.1415926535897932384626433832795
+#endif
+
 using namespace std;
 
 namespace PathingLib
@@ -250,12 +254,30 @@ namespace PathingLib
 		return nodes[nodeIndex].out_edges_amount;
 	}
 
+	double deg2rad(double deg)
+	{
+		return (deg * M_PI / 180.0);
+	}
+
 	int Graph::getTheClosestNode(int lng, int lat) {
-		int minDist = Utility::getINF();
+		float minDist = Utility::getINF();
 		int node = -1;
 		float dist = 0;
 		for (int i = 0; i < nodesAmount; i++) {
-			dist = abs(nodes[i].longtitude - lng) + abs(nodes[i].latitude - lat);
+			double lat1 = deg2rad(lat);
+			double lon1 = deg2rad(lng);
+			double lat2 = deg2rad(nodes[i].latitude);
+			double lon2 = deg2rad(nodes[i].longtitude);
+
+			double d_lat = abs(lat1 - lat2);
+			double d_lon = abs(lon1 - lon2);
+
+			double a = pow(sin(d_lat / 2), 2) + cos(lat1) * cos(lat2) * pow(sin(d_lon / 2), 2);
+
+			//double d_sigma = 2 * atan2(sqrt(a), sqrt(1 - a));
+			double d_sigma = 2 * asin(sqrt(a));
+
+			dist = d_sigma;
 			if (dist < minDist) {
 				node = i;
 				minDist = dist;

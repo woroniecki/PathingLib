@@ -134,6 +134,8 @@ namespace PathingLib
 	string ALT::getPathJSON(float lng1, float lat1, float lng2, float lat2) {
 		int sourceIndex = g->getTheClosestNode(lng1, lat1);
 		int targetIndex = g->getTheClosestNode(lng2, lat2);
+		if (sourceIndex == targetIndex)
+			return "no path";
 		int* distanceArray = new int[g->getNodesAmount()];
 		std::fill_n(distanceArray, g->getNodesAmount(), Utility::getINF());
 		int* realDistanceArray = new int[g->getNodesAmount()];
@@ -149,7 +151,7 @@ namespace PathingLib
 		nodesBeforeArray[sourceIndex] = -1;
 		edgeBeforeArray[sourceIndex] = -1;
 		q.push(make_pair(heuristic(sourceIndex, targetIndex), sourceIndex));
-
+		
 		while (!q.empty()) {
 			P top = q.top();
 			q.pop();
@@ -172,8 +174,10 @@ namespace PathingLib
 				}
 			}
 		}
+		
 		if (distanceArray[targetIndex] == Utility::getINF())
 			return "";
+
 		string result = Path::getJSON(targetIndex, nodesBeforeArray, edgeBeforeArray, *g, realDistanceArray[targetIndex], 50000);
 		delete[] distanceArray;
 		delete[] realDistanceArray;
