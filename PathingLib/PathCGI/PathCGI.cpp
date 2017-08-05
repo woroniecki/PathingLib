@@ -76,7 +76,7 @@ string getUrlArg(string url, string arg) {
 
 int main()
 {
-	cout << "Content-type:text/json\r\n\r\n";
+	cout << "Content-type:text/html\r\n\r\n";
 
 	char* url_chars = getenv("REQUEST_URI");
 	string url(url_chars);

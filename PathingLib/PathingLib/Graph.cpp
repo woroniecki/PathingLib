@@ -169,6 +169,11 @@ namespace PathingLib
 		file.close();
 	}
 
+	double deg2rad(double deg)
+	{
+		return (deg * M_PI / 180.0);
+	}
+
 	NODE Graph::addNode(double latitude, double longtitude) {
 		if (nodesAmount >= nodesMaxAmount) {
 			throw std::out_of_range("Can't add more nodes, because array of nodes is full");
@@ -176,6 +181,8 @@ namespace PathingLib
 		nodes[nodesAmount].index = nodesAmount;
 		nodes[nodesAmount].latitude = latitude;
 		nodes[nodesAmount].longtitude = longtitude;
+		nodes[nodesAmount].latitudeRad = deg2rad(latitude);
+		nodes[nodesAmount].longtitudeRad = deg2rad(longtitude);
 		nodes[nodesAmount].longtitudeSTRING = to_string(longtitude);
 		nodes[nodesAmount].latitudeSTRING = to_string(latitude);
 		nodesAmount++;
@@ -254,20 +261,15 @@ namespace PathingLib
 		return nodes[nodeIndex].out_edges_amount;
 	}
 
-	double deg2rad(double deg)
-	{
-		return (deg * M_PI / 180.0);
-	}
-
-	int Graph::getTheClosestNode(int lng, int lat) {
+	int Graph::getTheClosestNode(float lng, float lat) {
 		float minDist = Utility::getINF();
 		int node = -1;
 		float dist = 0;
+		double lat1 = deg2rad(lat);
+		double lon1 = deg2rad(lng);
 		for (int i = 0; i < nodesAmount; i++) {
-			double lat1 = deg2rad(lat);
-			double lon1 = deg2rad(lng);
-			double lat2 = deg2rad(nodes[i].latitude);
-			double lon2 = deg2rad(nodes[i].longtitude);
+			double lat2 = nodes[i].latitudeRad;
+			double lon2 = nodes[i].longtitudeRad;
 
 			double d_lat = abs(lat1 - lat2);
 			double d_lon = abs(lon1 - lon2);

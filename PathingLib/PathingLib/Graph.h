@@ -18,8 +18,10 @@ namespace PathingLib
 	public:
 		int index = -1;
 		double longtitude;
+		double longtitudeRad;
 		string longtitudeSTRING;
 		double latitude;
+		double latitudeRad;
 		string latitudeSTRING;
 		int* in_edges;
 		int in_edges_amount = 0;
@@ -114,7 +116,7 @@ namespace PathingLib
 		// return amount of edges from node with nodeIndex to any node
 		int PATHINGLIB_API getOutEdgesAmount(int nodeIndex);
 
-		int PATHINGLIB_API getTheClosestNode(int lng, int lat);
+		int PATHINGLIB_API getTheClosestNode(float lng, float lat);
 
 	private:
 

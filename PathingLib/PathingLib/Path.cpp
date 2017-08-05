@@ -72,14 +72,14 @@ namespace PathingLib
 			nodesAmount++;
 		}
 
-		string edgesStr = "\'paths\': [{ \n \'instructions\': [";
-		string coordsStr = "\'points\':\n { \'coordinates\': [\n";
+		string edgesStr = "{ \"paths\": [{ \"instructions\": [";
+		string coordsStr = "\"points\":\n { \"coordinates\": [\n";
 
 		bool cycleStreet = g_->getEdge(edges_[nodesAmount - 2]).distance != g_->getEdge(edges_[nodesAmount - 2]).realDistance;
 		int startInterval = 0;
 
 		for (int i = nodesAmount - 1; i > -1; i--) {
-			coordsStr += "[\n" + to_string(g_->getNode(nodes_[i]).longtitude) + ",\n" + to_string(g_->getNode(nodes_[i]).latitude) + "\n]\n";
+			coordsStr += "[\n" + to_string(g_->getNode(nodes_[i]).latitude) + ",\n" + to_string(g_->getNode(nodes_[i]).longtitude) + "\n]\n";
 			if (i > 0)
 				coordsStr += ",";
 
@@ -91,8 +91,8 @@ namespace PathingLib
 
 					edgesStr += "{ \n";
 					if (cycleStreet)
-						edgesStr += "\'annotation_text\': \'cycleway\', \n";
-					edgesStr += "\'interval\': [ \n " + to_string(startInterval) + ", \n " + to_string(nodesAmount - 1 - i) + "\n]";
+						edgesStr += "\"annotation_text\": \"cycleway\", \n";
+					edgesStr += "\"interval\": [ \n " + to_string(startInterval) + ", \n " + to_string(nodesAmount - 1 - i) + "\n]";
 					edgesStr += "}, \n";
 					cycleStreet = isThisEdgeCycleStreet;
 					startInterval = nodesAmount - 1 - i;
@@ -102,15 +102,15 @@ namespace PathingLib
 
 		edgesStr += "{ \n";
 		if (cycleStreet)
-			edgesStr += "\'annotation_text\': \'cycleway\',";
-		edgesStr += "\'interval\': [ \n " + to_string(startInterval) + ", \n " + to_string(nodesAmount - 1) + "\n]";
+			edgesStr += "\"annotation_text\": \"cycleway\",";
+		edgesStr += "\"interval\": [ \n " + to_string(startInterval) + ", \n " + to_string(nodesAmount - 1) + "\n]";
 		edgesStr += "}";
 		edgesStr += "\n";
 
 		edgesStr += "],";
-		coordsStr += "], \'type\': \'LineString\'} \n";
+		coordsStr += "], \"type\": \"LineString\" } }] }";
 
-		return "{" + edgesStr + coordsStr + "}";
+		return edgesStr + coordsStr;
 	}
 
 	/* string Path::getJSON() {
