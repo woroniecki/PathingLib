@@ -23,7 +23,7 @@ cout << "Path distance: " << p.getDistance('m');
 
 <div>
 For better clarity see 
-<a href="http://kodujebolubie.pl/PathingLib/">documentation</a> and 
+<a href="https://woroniecki.github.io/PathingLib/index.html">documentation</a> and 
 <a href="https://github.com/woroniecki/PathingLib/tree/master/PathingLib/ExampleClient">example client</a>.
 </div>
 
