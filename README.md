@@ -33,7 +33,7 @@ Result of example client.
 
 <h2>Made by using</h2>
 <ul>
-<li>C++ 14</li>
+<li>C++</li>
 <li>Microsoft Visual Studio 2017</li>
 <li>Microsoft Visual C++ 2017 14.10.25008</li>
 </ul>
